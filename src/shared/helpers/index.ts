@@ -6,3 +6,4 @@ export {
   createUniqueRandomSequence,
   createUniqueIdSequence
 } from './common.js';
+export { getMongoURI } from './getMongoURI.js';
