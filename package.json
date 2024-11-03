@@ -19,6 +19,7 @@
     "mock:server": "json-server ./mocks/json-server-api.json --port 3123 --host localhost"
   },
   "devDependencies": {
+    "@typegoose/typegoose": "12.4.0",
     "@types/convict": "6.1.6",
     "@types/convict-format-with-validator": "6.0.5",
     "@types/node": "20.12.7",
