@@ -1,10 +1,7 @@
 #!/usr/bin/env/node
+import 'reflect-metadata'; // т.к. в классах используется @injectable и @inject
 
-import { CLIApplication } from './cli/cli-application.js';
-import { GenerateCommand } from './cli/commands/generate.command.js';
-import { HelpCommand } from './cli/commands/help.command.js';
-import { ImportCommand } from './cli/commands/import.command.js';
-import { VersionCommand } from './cli/commands/version.command.js';
+import { CLIApplication, GenerateCommand, HelpCommand, ImportCommand, VersionCommand } from './cli/index.js';
 
 function bootstrap() {
   const cliApplication = new CLIApplication();

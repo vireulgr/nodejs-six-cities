@@ -28,13 +28,10 @@ export function getRandomArrayItems<T>(arr: T[]): T[] {
   const sequence = createUniqueRandomSequence(0, sequenceLimit);
 
   const result = [];
-  let randomArrayIndex = 0;
-  let count = 0;
-  do {
-    count += 1;
-    randomArrayIndex = sequence();
+  for (let count = 0; count < sequenceLimit; count += 1) {
+    const randomArrayIndex = sequence();
     result.push(arr[randomArrayIndex]);
-  } while (count < sequenceLimit);
+  }
 
   return result;
 }

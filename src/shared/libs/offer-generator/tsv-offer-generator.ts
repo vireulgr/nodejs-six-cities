@@ -11,6 +11,7 @@ const PRICE_MIN = 100;
 const PRICE_MAX = 100000;
 const FIRST_WEEK_DAY = 1;
 const LAST_WEEK_DAY = 7;
+
 export class TSVOfferGenerator implements OfferGenerator {
   constructor(
     private mockData: JsonServerData

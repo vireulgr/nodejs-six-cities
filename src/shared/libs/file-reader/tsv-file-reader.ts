@@ -2,13 +2,10 @@ import { readFileSync } from 'node:fs';
 import EventEmitter from 'node:events';
 import { createReadStream } from 'node:fs';
 
-import { Offer } from '../../types/offer.type.js';
-import { City } from '../../types/city.type.js';
 import { FileReader } from './file-reader.interface.js';
-import { OfferType } from '../../types/offer-type.enum.js';
-import { User } from '../../types/user.type.js';
-import { Coordinates } from '../../types/coordinates.type.js';
-import { Comfort } from '../../types/comfort.enum.js';
+
+import { Offer, City, OfferType, User, Coordinates, Comfort } from '../../types/index.js';
+import { CITIES } from '../../types/city.type.js';
 
 
 // events: 'line' - offer (Offer)
@@ -30,7 +27,11 @@ export class TSVFileReader extends EventEmitter implements FileReader {
   }
 
   private parseLineToCity(line: string): City {
-    return { id: line };
+    const city = CITIES.find(({name}) => name === line);
+    if (!city) {
+      throw new Error(`cannot find city ${line}`);
+    }
+    return city;
   }
 
   private parseLineToPhotos(line: string): string[] {
@@ -120,7 +121,13 @@ export class TSVFileReader extends EventEmitter implements FileReader {
         readLinesCount += 1;
 
         const parsedOffer = this.parseLineToOffer(completeLine);
-        this.emit('line', parsedOffer);
+
+        // для того чтобы не было гонки данных при добавлении в БД
+        // В обработчике события line нужно будет вызвать resolve
+        await new Promise((resolve) => {
+          this.emit('line', parsedOffer, resolve);
+        });
+        //this.emit('line', parsedOffer);
       }
     }
 
